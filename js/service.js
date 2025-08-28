@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", () => {
-    const totalCoin = 100;
+    let totalCoin = 100;
     let totalHeart = 0;
     let CopyElement = [];
     let totalCopy = CopyElement.length;
@@ -31,29 +31,45 @@ document.addEventListener("DOMContentLoaded", () => {
             const serviceName = card.querySelector("[name='serviceName']").textContent;
             const number = card.querySelector("[name='number']").textContent;
 
-            callHistory.push({
-                serviceName: serviceName,
-                number: number,
-                justtime: new Date().toLocaleTimeString()
-            });
-            alert(`📞 Calling ${serviceName} ${number}`);
+            if (totalCoin >= 20) {
+                callHistory.push({
+                    serviceName: serviceName,
+                    number: number,
+                    justtime: new Date().toLocaleTimeString()
+                });
 
-            const callHistoryList = document.getElementById("callHistoryList");
+                alert(`📞 Calling ${serviceName} ${number}`);
 
-            let HtmlContent = "";
+                const callHistoryList = document.getElementById("callHistoryList");
 
-            for (let call of callHistory) {
+                let HtmlContent = "";
 
-                HtmlContent += "<div class='bg-surface shadow-md px-2 rounded-lg flex justify-between items-center py-3'><div><span class='block font-semibold text-gray-800'>" + call.serviceName + "</span><span class='text-green-600 font-bold'>" + call.number + "</span></div><p class='text-xs text-gray-500'>" + call.justtime + "</p></div>";
+                for (let call of callHistory) {
 
+                    HtmlContent += "<div class='bg-surface shadow-md px-2 rounded-lg flex justify-between items-center py-3'><div><span class='block font-semibold text-gray-800'>" + call.serviceName + "</span><span class='text-green-600 font-bold'>" + call.number + "</span></div><p class='text-xs text-gray-500'>" + call.justtime + "</p></div>";
+
+                }
+                callHistoryList.innerHTML = HtmlContent;
+
+                totalCoin -= 20;
+                document.getElementById("totalcoin").textContent = totalCoin;
+            } else {
+                alert(`❌ You don't have enough coin, minimum 20 coin to make the call.`);
             }
-            
-            callHistoryList.innerHTML = HtmlContent;
+
+
+
+
 
         });
 
+    });
 
 
+    document.getElementById("clear").addEventListener("click", function () {
+        callHistory = [];
+        const callHistoryList = document.getElementById("callHistoryList");
+        callHistoryList.innerHTML = "";
     });
 
 
