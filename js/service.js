@@ -2,8 +2,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     let totalCoin = 100;
     let totalHeart = 0;
-    let CopyElement = [];
-    let totalCopy = CopyElement.length;
+    let totalCopy = 0;
     let callHistory = [];
     document.getElementById("totalcoin").textContent = totalCoin;
     document.getElementById("totalHeart").textContent = totalHeart;
@@ -58,9 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-
-
-
         });
 
     });
@@ -73,6 +69,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    document.querySelectorAll("button[name='copy']").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const copynode = this.parentNode.parentNode;
+            const number = copynode.querySelector("[name='number']").textContent;
+            navigator.clipboard.writeText(number);
+            alert(`The number has been copied - ${number}`);
+            totalCopy += 1;
+            document.getElementById("totalCopy").textContent = totalCopy;
+
+        });
+
+    });
 
 
 });
